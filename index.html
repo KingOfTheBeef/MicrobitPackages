@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+		<meta  charset="UTF-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js">
+                </script>
+                <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js">
+                </script>
+                <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+                <style>
+                        html, body, h1, h2, h3, h4, h5, h6 {font-family: 'Roboto', sans-serif;}
+                </style>
+                <title>
+                        Home
+                </title>
+</head>
+<body>
+<div ng-app="tApp" ng-controller="tController">
+ <div class="w3-top">
+                                <div class="w3-sidebar w3-bar-block w3-light-grey w3-border w3-card-4">
+                                        <a href="#!home" class="w3-bar-item w3-button w3-mobile" ng-click="changeTitle('Home')">Home</a>
+<a href="#!blog" class="w3-bar-item w3-button w3-mobile" ng-click="changeTitle('Blog')">Blog</a>
+                                        <div class="w3-dropdown-hover">
+                                                <a href="#!packages" ng-click="changeTitle('Packages')"><button class="w3-button">Packages</button></a>
+                                                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                                        <a href="#!proximity" class="w3-bar-item w3-button w3-light-grey" ng-click="changeTitle('Proximity')">Proximity</a>
+                                                        <a href="#!rational" class="w3-bar-item w3-button w3-light-grey" ng-click="changeTitle('Rational Numbers')">Rational Numbers</a>
+                                                        <a href="#!menu" class="w3-bar-item w3-button w3-light-grey" ng-click="changeTitle('Menu')">Menu</a>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="w3-content" style="max-width:60%">
+                                <ng-view>
+                                </ng-view>
+                        </div>
+</div>
+<script>
+
+var app = angular.module("tApp", ["ngRoute"]);
+
+                        app.config(function($routeProvider){
+                                $routeProvider.when("/packages", {
+templateUrl : "packages.html"
+				}).when("/blog", {templateUrl : "blog.html",controller : "cBlog"}).when("/proximity", {templateUrl:"proximity.html"}).when("/rational", {templateUrl:"rational.html"}).when("/menu", {templateUrl:"menu.html"}).otherwise({
+                                        templateUrl : "home.html"
+                                });
+                        });
+
+                        app.controller("tController", function($scope){
+                                $scope.pageName = "Home";
+                                $scope.changeTitle = function(newTitle){
+                                        document.title = newTitle;
+                                };
+                        });
+
+			app.controller("cBlog", function($scope, $sce, $http){
+
+var loadFactory = function(that) {
+        console.log(that);
+        return function () {
+
+        }
+}
+
+$scope.items = [
+        {name:"Our 1st Package",url:"blog1.html", date:"11/12/17", author:"Arron"},
+        {name:"Our 2nd Package",url:"blog2.html", date:"13/12/17", author:"Arron"},
+        {name:"Our 3rd Package",url:"blog3.html", date:"13/12/17", author:"Arron"}
+];
+
+$scope.loadPost = function(url, index) {
+        $http.get(url).then(function(response) {
+                $scope.items[index].content=$sce.trustAsHtml(response.data);                
+        });
+};
+
+$scope.loadPosts = function() {
+        for (var i = 0; i < $scope.items.length; i++) {
+                var item = $scope.items[i];
+	        if (item.url.length) {
+                        $scope.loadPost("./blog/"+item.url, i);
+                }	
+        }
+};
+
+$scope.loadPosts();
+
+});
+</script>
+</body>
+</html>

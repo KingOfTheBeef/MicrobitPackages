@@ -1,0 +1,32 @@
+<div class="w3-container">
+<p class="w3-xxxlarge">
+Proximity
+</p>
+</div>
+
+<div class="w3-panel w3-card-4">
+<p class="w3-xlarge">
+Description
+</p>
+<p>
+The proximity package helps users to estimate the distance between two microbits. It works by measuring the signal strength between two microbits and then using that value to estimate how far away the microbits are. This is achieved by comparing the signal stregth to the distance we would expect based using real world data that has been collected.<br>Avaliable here:<br><a href = "https://makecode.microbit.org/_TgWaRT5KV5jM">https://makecode.microbit.org/_TgWaRT5KV5jM</a>
+</p>
+<p class="w3-xlarge">
+Function Reference
+</p>
+<p>
+<p style="text-decoration:underline;">
+Proximity.BroadcastProximity()
+</p>
+This function broadcasts a message to all other connected microbits in the group. This can be used to then find the signal strength.<br><br>
+<p style="text-decoration:underline;">
+Proximity.onReceived( ({ distance, strength })
+</p>
+This function is an event that is activated whenever a message is received. It provides the distance and signal strength for the user to use. This can be used for example to determine how far away a microbit that had just sent a message is.<br><br>
+<p style="text-decoration:underline;">
+Proximity.StrengthToDistance(int SignalStregth)
+</p>
+Uses the signal strength of the last received message to calculate and return an integer value that is the estimated distance that that message travelled.<br><br>
+</p>
+
+</div>
